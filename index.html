@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#e8eef6">
+  <meta name="description" content="AUSTOLED PLANNER Mobile: calcola LED wall, cabinet, risoluzione, peso, consumi, bauli, struttura e mapping canvas. Funziona anche offline.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="AUSTOLED">
+  <meta name="format-detection" content="telephone=no">
+  <title>AUSTOLED PLANNER</title>
+
+  <link rel="manifest" href="manifest.webmanifest?v=2.0.0">
+  <link rel="icon" href="icons/icon.svg?v=2.0.0" type="image/svg+xml">
+  <link rel="icon" href="icons/icon-192.png?v=2.0.0" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png?v=2.0.0">
+  <link rel="stylesheet" href="css/base.css?v=2.0.0">
+  <link rel="stylesheet" href="css/app.css?v=2.0.0">
+
+  <script>
+    /* Messaggio chiaro se l'app non riesce ad avviarsi. */
+    (function () {
+      function showBootError(html) {
+        var box = document.getElementById('boot-error');
+        if (!box) return;
+        box.hidden = false;
+        box.innerHTML = html;
+      }
+      window.addEventListener('error', function (event) {
+        var target = event.target;
+        if (target && target.tagName === 'SCRIPT' && target.src) {
+          showBootError('<strong>File dell’app non trovato.</strong><br>Verifica di aver aperto la cartella completa (con css, js e icons).');
+        } else if (event.message) {
+          showBootError('<strong>Si è verificato un errore:</strong><br>' + event.message + '<br>Prova ad aggiornare la pagina o il browser.');
+        }
+      }, true);
+      document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+          var app = document.getElementById('app');
+          if (app && !app.firstChild) {
+            showBootError('<strong>L’app non si è avviata.</strong><br>Controlla la connessione e ricarica la pagina. Se il problema continua, svuota la cache del browser.');
+          }
+        }, 2500);
+      });
+    })();
+  </script>
+</head>
+<body>
+  <div id="boot-error" class="boot-error" hidden></div>
+  <div id="app"></div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="print-root"></div>
+
+  <noscript>
+    <p style="max-width:560px;margin:40px auto;padding:18px 20px;border:1px solid #b91c1c;border-radius:16px;background:#fee2e2;color:#b91c1c;font-family:Segoe UI,Arial,sans-serif;font-weight:700;line-height:1.5;">
+      Per usare AUSTOLED PLANNER devi attivare JavaScript nel browser.
+    </p>
+  </noscript>
+
+  <!-- Moduli dell'app (ordine importante, nessuna build necessaria) -->
+  <script src="js/data.js?v=2.0.0"></script>
+  <script src="js/calc.js?v=2.0.0"></script>
+  <script src="js/draw.js?v=2.0.0"></script>
+  <script src="js/ui.js?v=2.0.0"></script>
+  <script src="js/views.js?v=2.0.0"></script>
+  <script src="js/app.js?v=2.0.0"></script>
+</body>
+</html>
